@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "tg-admin"
+version = "0.0.1"
+description = "Bot that will admin your telegram channel and shitpost like a god"
+authors = ["gavril-s <gavril.senkevich@gmail.com>"]
+readme = "README.md"
+packages = [{include = "tg_admin"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-telegram-bot = "^20.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
