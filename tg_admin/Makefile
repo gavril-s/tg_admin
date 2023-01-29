@@ -3,3 +3,6 @@ run:
 
 format:
 	black .
+
+db:
+	docker-compose up -d
