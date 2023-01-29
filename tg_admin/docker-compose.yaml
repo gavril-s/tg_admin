@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    container_name: tg_admin_postgres_container
+    container_name: tg_admin_postgres
     image: postgres:latest
     command:
       - "postgres"
@@ -55,47 +55,6 @@ services:
         limits:
           cpus: '1'
           memory: 4G
-    networks:
-      - postgres
-
-  pgadmin:
-    container_name: tg_admin_pgadmin_container
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
-      PGADMIN_CONFIG_SERVER_MODE: "False"
-    volumes:
-      - ./db_data/pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1G
-    networks:
-      - postgres
-
-  postgres_exporter:
-    container_name: tg_admin_exporter_container
-    image: prometheuscommunity/postgres-exporter:latest
-    environment:
-      DATA_SOURCE_URI: "postgres:5432/tg_admin_db?sslmode=disable"
-      DATA_SOURCE_USER: "admin"
-      DATA_SOURCE_PASS: "admin"
-      PG_EXPORTER_EXTEND_QUERY_PATH: "/etc/postgres_exporter/queries.yaml"
-    volumes:
-      - ./db_data/queries.yaml:/etc/postgres_exporter/queries.yaml:ro
-    ports:
-      - "9187:9187"
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.2'
-          memory: 500M
     networks:
       - postgres
 

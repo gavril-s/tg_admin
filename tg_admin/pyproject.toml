@@ -9,6 +9,7 @@ packages = [{include = "tg_admin"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 python-telegram-bot = "^20.0"
+psycopg2 = "^2.9.5"
 
 
 [tool.poetry.group.dev.dependencies]
