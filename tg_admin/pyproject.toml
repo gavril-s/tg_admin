@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "tg_admin"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 python-telegram-bot = "^20.0"
 
 
