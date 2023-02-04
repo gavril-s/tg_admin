@@ -6,6 +6,8 @@ from dto import Message
 
 
 async def add_message(message: Message) -> bool:
+    if message is None:
+        return False
     sql = """
         INSERT INTO messages
             (id, local_id, user_id, from_chat_id, to_chat_id, sending_time)

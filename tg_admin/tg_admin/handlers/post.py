@@ -5,6 +5,7 @@ from db import get_user, get_user_messages, delete_message
 from dto import User, UserState
 from time import sleep
 
+
 async def post_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user: User = await get_user(update.message.from_user["id"])
 
@@ -12,8 +13,8 @@ async def post_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         messages = await get_user_messages(user)
         for message in messages:
             res = await context.bot.copy_message(
-                    message.to_chat_id, user.id, message.local_id
-                )
+                message.to_chat_id, user.id, message.local_id
+            )
             if res is not None:
                 await delete_message(message)
             sleep(0.5)
