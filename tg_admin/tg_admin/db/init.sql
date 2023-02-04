@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS messages(
     id UUID PRIMARY KEY,
-    user_id UUID,
+    user_id BIGINT,
     from_chat_id BIGINT,
     to_chat_id BIGINT,
     sending_time TIMESTAMP DEFAULT NULL
@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS users(
     first_name VARCHAR(64),
     last_name VARCHAR(64) DEFAULT NULL,
     username VARCHAR(32) DEFAULT NULL,
-    is_premium BOOLEAN DEFAULT NULL
+    is_premium BOOLEAN DEFAULT NULL,
+    chat_id BIGINT DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS chats(

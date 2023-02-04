@@ -18,7 +18,6 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         user_dict = update.message.from_user
-
         user = User(
             id=user_dict["id"],
             is_bot=user_dict["is_bot"],
@@ -26,6 +25,6 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             last_name=user_dict["last_name"],
             username=user_dict["username"],
             is_premium=user_dict["is_premium"],
+            chat_id=update.message.chat_id
         )
         result = await add_user(user)
-        print(result)

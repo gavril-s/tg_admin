@@ -11,6 +11,7 @@ class User:
     last_name: tp.Optional[str]
     username: tp.Optional[str]
     is_premium: tp.Optional[bool]
+    chat_id: tp.Optional[int]
 
     @staticmethod
     def from_dict(dic: tp.Dict) -> tp.Optional[User]:
@@ -22,6 +23,7 @@ class User:
                 dic["last_name"],
                 dic["username"],
                 dic["is_premium"],
+                dic["chat_id"]
             )
         except:
             return None
@@ -29,12 +31,12 @@ class User:
     @staticmethod
     def from_db(res: tp.Dict) -> tp.Optional[User]:
         try:
-            return User(res[0], res[1], res[2], res[3], res[4], res[5])
+            return User(res[0], res[1], res[2], res[3], res[4], res[5], res[6])
         except:
             return None
-
+            
     def to_db(self) -> tp.Optional[tp.Tuple]:
         try:
-            return (id, is_bot, first_name, last_name, username, is_premium)
+            return (id, is_bot, first_name, last_name, username, is_premium, chat_id)
         except:
             return None

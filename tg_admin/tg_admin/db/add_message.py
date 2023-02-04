@@ -1,10 +1,10 @@
-import config
 import psycopg2
+import config
 import typing as tp
-from dto import User
+from dto import Message
 
 
-async def get_user(id: int) -> tp.Optional[User]:
+async def add_message(message: Message) -> bool:
     connection = psycopg2.connect(
         dbname=config.db_name,
         user=config.db_user,
@@ -14,13 +14,12 @@ async def get_user(id: int) -> tp.Optional[User]:
     )
     cursor = connection.cursor()
     cursor.execute(
-        f"SELECT id, is_bot, first_name, last_name, username, is_premium, chat_id FROM users WHERE id={id};"
+        f"INSERT INTO messages\
+            (id, user_id, from_chat_id, to_chat_id, sending_time)\
+            VALUES\
+            ({message.id}, {message.user_id}, '{message.from_chat_id}', '{message.to_chat_id}', NULL);"
     )
-    result = cursor.fetchone()
     connection.commit()
     cursor.close()
     connection.close()
-    try:
-        return User.from_db(result)
-    except:
-        return None
+    return True

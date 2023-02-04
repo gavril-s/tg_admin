@@ -1,3 +1,9 @@
+install:
+	python -m poetry install
+
+shell:
+	python -m poetry shell
+
 run:
 	python ./tg_admin/main.py
 

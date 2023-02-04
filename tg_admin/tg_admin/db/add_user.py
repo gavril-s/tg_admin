@@ -15,9 +15,9 @@ async def add_user(user: User) -> bool:
     cursor = connection.cursor()
     cursor.execute(
         f"INSERT INTO users\
-            (id, is_bot, first_name, last_name, username, is_premium)\
+            (id, is_bot, first_name, last_name, username, is_premium, chat_id)\
             VALUES\
-            ({user.id}, {user.is_bot}, '{user.first_name}', '{user.last_name}', '{user.username}', {user.is_premium});"
+            ({user.id}, {user.is_bot}, '{user.first_name}', '{user.last_name}', '{user.username}', {user.is_premium}, {user.chat_id});"
     )
     connection.commit()
     cursor.close()
