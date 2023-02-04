@@ -1,11 +1,10 @@
-from __future__ import annotations
-import config
 import psycopg2
+import config
 import typing as tp
-import dto
+from dto import User
 
 
-async def get_user(id: int) -> tp.Optional[dto.User]:
+async def delete_user(user: User) -> bool:
     connection = psycopg2.connect(
         dbname=config.db_name,
         user=config.db_user,
@@ -15,13 +14,10 @@ async def get_user(id: int) -> tp.Optional[dto.User]:
     )
     cursor = connection.cursor()
     cursor.execute(
-        f"SELECT id, is_bot, first_name, last_name, username, is_premium, chat_id, state FROM users WHERE id={id};"
+        f"DELETE FROM users\
+        WHERE id = {user.id};"
     )
-    result = cursor.fetchone()
     connection.commit()
     cursor.close()
     connection.close()
-    try:
-        return dto.User.from_db(result)
-    except:
-        return None
+    return True

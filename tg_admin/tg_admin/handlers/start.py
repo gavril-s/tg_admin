@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from dto import User
+from dto import User, UserState
 from db import get_user, add_user
 
 
@@ -25,6 +25,7 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             last_name=user_dict["last_name"],
             username=user_dict["username"],
             is_premium=user_dict["is_premium"],
-            chat_id=update.message.chat_id
+            chat_id=None,
+            state=UserState.DEFAULT,
         )
         result = await add_user(user)

@@ -22,12 +22,14 @@ if __name__ == "__main__":
     help_handler = CommandHandler("help", handlers.help)
     post_handler = CommandHandler("post", handlers.post)
     regular_handler = CommandHandler("regular", handlers.regular)
-    content_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), handlers.content)
+    set_chat_handler = CommandHandler("set_chat", handlers.set_chat)
+    content_handler = MessageHandler(~filters.COMMAND, handlers.content)
 
     application.add_handler(start_handler)
     application.add_handler(help_handler)
     application.add_handler(post_handler)
     application.add_handler(regular_handler)
+    application.add_handler(set_chat_handler)
     application.add_handler(content_handler)
 
     application.run_polling()
