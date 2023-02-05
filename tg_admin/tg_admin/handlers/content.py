@@ -30,7 +30,18 @@ async def content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif user.state == UserState.SETTING_CHAT:
             chat = update.message.forward_from_chat
             if chat is not None:
-                user.chat_id = chat.id
+                chat_admins = await chat.get_administrators()
+                if update.effective_user in (admin.user for admin in chat_admins):
+                    user.chat_id = chat.id
+                    await context.bot.send_message(
+                        chat_id=update.effective_chat.id,
+                        text="Принято.",
+                    )
+                else:
+                    await context.bot.send_message(
+                    chat_id=update.effective_chat.id,
+                    text="Вы не админ в этом чате!.",
+                    ) 
             else:
                 await context.bot.send_message(
                     chat_id=update.effective_chat.id,
