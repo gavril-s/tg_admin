@@ -6,6 +6,9 @@ from db import get_user
 
 async def set_chat_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user: User = await get_user(update.message.from_user["id"])
+    if user is None:
+        return
+
     user.state = UserState.SETTING_CHAT
     await user.commit()
     await context.bot.send_message(

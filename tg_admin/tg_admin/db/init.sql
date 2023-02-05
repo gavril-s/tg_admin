@@ -23,6 +23,4 @@ CREATE TABLE IF NOT EXISTS chats(
     chat_type VARCHAR(16),
     title VARCHAR(256) DEFAULT NULL,
     username VARCHAR(32) DEFAULT NULL,
-    first_name VARCHAR(64),
-    last_name VARCHAR(64) DEFAULT NULL
 );
