@@ -1,6 +1,3 @@
-import telegram
-from telegram import Update
-from telegram.ext import ContextTypes
 from db import get_user, get_user_messages, delete_message
 from dto import User, UserState
 from time import sleep

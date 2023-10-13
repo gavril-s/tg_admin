@@ -4,7 +4,9 @@ from pyrogram.handlers import MessageHandler
 from config import api_id, api_hash
 import handlers
 
-logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(name)s - %(levelname)s - %(message)s"
+)
 
 app = Client("tg_admin", api_id=api_id, api_hash=api_hash)
 
@@ -17,10 +19,12 @@ app.add_handler(
     )
 )
 app.add_handler(
-    MessageHandler(
-        handlers.help, filters.private & filters.command("help")
-    )
+    MessageHandler(handlers.help, filters.private & filters.command("help"))
 )
+app.add_handler(
+    MessageHandler(handlers.stat, filters.private & filters.command("stat"))
+)
+app.add_handler(MessageHandler(handlers.content, filters.private))
 
 logging.info("Starting...")
 app.run()
