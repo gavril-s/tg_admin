@@ -8,7 +8,7 @@ run:
 	python ./tg_admin/main.py
 
 format:
-	black .
+	black -l 79 .
 
 db:
 	docker-compose up -d

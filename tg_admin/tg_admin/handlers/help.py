@@ -1,9 +1,5 @@
-from telegram import Update
-from telegram.ext import ContextTypes
+import logging
 
-
-async def help_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="Пока ничего нет.",
-    )
+async def help_handler(client, message):
+    logging.info("/help")
+    await message.reply("Помоги себе сам.")

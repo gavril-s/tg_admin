@@ -1,13 +1,13 @@
-from telegram import Update
-from telegram.ext import ContextTypes
+import logging
 from dto import User, UserState, Message
 from db import get_user, add_message
 from uuid import uuid4
 
 
 async def content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info("Content recieved")
     if update.channel_post is not None:
-        pass # channel post
+        pass  # channel post
     elif update.message is not None:
         user_id: int = update.message.from_user["id"]
         user: User = await get_user(user_id)
@@ -25,13 +25,17 @@ async def content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 local_id = update.message.id
                 from_chat_id = update.message.chat_id
                 to_chat_id = user.chat_id
-                message = Message(id, local_id, user_id, from_chat_id, to_chat_id, None)
+                message = Message(
+                    id, local_id, user_id, from_chat_id, to_chat_id, None
+                )
                 await add_message(message)
         elif user.state == UserState.SETTING_CHAT:
             chat = update.message.forward_from_chat
             if chat is not None:
                 chat_admins = await chat.get_administrators()
-                if update.effective_user in (admin.user for admin in chat_admins):
+                if update.effective_user in (
+                    admin.user for admin in chat_admins
+                ):
                     user.chat_id = chat.id
                     await context.bot.send_message(
                         chat_id=update.effective_chat.id,
@@ -39,9 +43,9 @@ async def content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     )
                 else:
                     await context.bot.send_message(
-                    chat_id=update.effective_chat.id,
-                    text="Вы не админ в этом чате!.",
-                    ) 
+                        chat_id=update.effective_chat.id,
+                        text="Вы не админ в этом чате!.",
+                    )
             else:
                 await context.bot.send_message(
                     chat_id=update.effective_chat.id,

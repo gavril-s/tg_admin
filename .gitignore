@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,notepadpp,visualstudiocode,pycharm,linux,git
 
 ### tg_admin ###
+tg_admin.session*
 config.py
 db_data
 

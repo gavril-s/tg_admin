@@ -1,30 +1,24 @@
-from telegram import Update
-from telegram.ext import ContextTypes
+import logging
 from dto import User, UserState
 from db import get_user, add_user
 
 
-async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user: User = await get_user(update.message.from_user["id"])
+async def start_handler(client, message):
+    logging.info("/start")
+    user: User = await get_user(message.from_user.id)
     if user is not None:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text="Я тебя уже где-то видел, антихайп",
-        )
+        await message.reply("Где-то я тебя уже видел")
     else:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text="Чот я тебя не припомню, антихайп",
-        )
+        await message.reply("Что-то я тебя не припомню")
 
-        user_dict = update.message.from_user
+        user_obj = message.from_user
         user = User(
-            id=user_dict["id"],
-            is_bot=user_dict["is_bot"],
-            first_name=user_dict["first_name"],
-            last_name=user_dict["last_name"],
-            username=user_dict["username"],
-            is_premium=user_dict["is_premium"],
+            id=user_obj.id,
+            is_bot=user_obj.is_bot,
+            first_name=user_obj.first_name,
+            last_name=user_obj.last_name,
+            username=user_obj.username,
+            is_premium=user_obj.is_premium,
             chat_id=None,
             state=UserState.DEFAULT,
         )
